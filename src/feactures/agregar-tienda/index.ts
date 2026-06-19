@@ -1,0 +1,1 @@
+export { default as AgregarTiendaPage } from "./pages/agregar-tienda.page";

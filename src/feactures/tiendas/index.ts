@@ -1,0 +1,1 @@
+export {default as TiendasPage}  from "./page/tiendas.page";
