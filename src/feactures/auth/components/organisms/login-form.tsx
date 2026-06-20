@@ -18,7 +18,7 @@ import StorefrontIcon from "@mui/icons-material/Storefront";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PersonIcon from "@mui/icons-material/Person";
 
-import type { LoginForm as LoginFormType, UserRole } from "../../types/  login-form.type";
+import type { LoginForm as LoginFormType, UserRole } from "../../types/login-form.type";
 import { AuthLogo } from "../atoms/auth-logo";
 
 type LoginFormProps = {

@@ -1,13 +1,20 @@
 import { Box } from "@mui/material";
-import type { LoginForm as LoginFormType, UserRole } from "../types/  login-form.type";
 import { LoginBrandPanel } from "../components/organisms/login-brand-panel";
 import { LoginForm } from "../components/organisms/login-form";
+
+import type {
+    LoginForm as LoginFormType,
+    UserRole,
+} from "../types/login-form.type";
 
 type LoginTemplateProps = {
     form: LoginFormType;
     showPassword: boolean;
     isDisabled: boolean;
-    onChange: (field: keyof LoginFormType, value: string | boolean) => void;
+    onChange: (
+        field: keyof LoginFormType,
+        value: string | boolean
+    ) => void;
     onRoleChange: (role: UserRole) => void;
     onTogglePassword: () => void;
     onSubmit: () => void;

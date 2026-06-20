@@ -1,5 +1,5 @@
 import { useState } from "react";
-import type { LoginForm, UserRole } from "../types/  login-form.type";
+import type { LoginForm, UserRole } from "../types/login-form.type";
 
 const initialForm: LoginForm = {
     email: "",
