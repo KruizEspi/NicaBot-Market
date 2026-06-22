@@ -32,13 +32,14 @@ export const DashboardHero = () => {
             </Box>
             <Box
                 component="img"
-                src="/ave-tienda.png"
+                src="/AveDash.png"
                 alt="Dashboard NicaBot Market"
                 sx={{
+
                     position: "absolute",
-                    right: { xs: -60, md: 10 },
+                    right: { xs: -60, md: 11  },
                     bottom: { xs: -30, md: -40 },
-                    width: { xs: 200, sm: 300, md: 500 },
+                    width: { xs: 200, sm: 300, md: 400 },
                     height: "auto",
                     objectFit: "contain",
                     opacity: { xs: 0.22, md: 1 },

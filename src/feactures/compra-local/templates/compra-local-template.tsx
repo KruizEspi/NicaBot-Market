@@ -3,22 +3,18 @@ import type { Tienda } from "../types/tienda.type";
 import { AppHeader } from "../components/organisms/app-header";
 import { FloatingChatbot } from "../components/organisms/loating-chatbot";
 import { Sidebar } from "../components/organisms/sidebar";
-import { StoresHero } from "../components/organisms/store-hero";
-import { StoresSection } from "../components/organisms/stores-section";
-
+import { HomeHero } from "../components/organisms/store-hero";
+import { MissionVisionSection } from "../components/organisms/mission-vision-section";
+import {ValuesSection} from "../components/organisms/values-section";
+import {ObjectivesSection} from "../components/organisms/objectives-section";
+import {HomeActionsSection} from "../components/organisms/home-section";
 type CompraLocalTemplateProps = {
-    search: string;
-    tiendas: Tienda[];
     chatOpen: boolean;
-    onSearchChange: (value: string) => void;
     onChatToggle: () => void;
 };
 
 export const CompraLocalTemplate = ({
-                                        search,
-                                        tiendas,
                                         chatOpen,
-                                        onSearchChange,
                                         onChatToggle,
                                     }: CompraLocalTemplateProps) => {
     return (
@@ -52,8 +48,11 @@ export const CompraLocalTemplate = ({
                         p: { xs: 2, md: 4 },
                     }}
                 >
-                    <StoresHero search={search} onSearchChange={onSearchChange} />
-                    <StoresSection tiendas={tiendas} />
+                    <HomeHero />
+                    <MissionVisionSection />
+                    <ValuesSection />
+                    <ObjectivesSection />
+                    <HomeActionsSection />
                 </Box>
             </Box>
 
