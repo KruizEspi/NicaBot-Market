@@ -17,7 +17,7 @@ export const AppHeader = () => {
             elevation={0}
             sx={{
                 background:
-                    "linear-gradient(135deg, #064e3b 0%, #15803d 42%, #22c55e 100%)",
+                    "linear-gradient(135deg, #064e3b 0%, #15896d 42%, #22c55e 100%)",
                 borderBottom: "1px solid rgba(255,255,255,0.28)",
                 boxShadow: "0 18px 45px rgba(6, 78, 59, 0.38)",
                 overflow: "hidden",
