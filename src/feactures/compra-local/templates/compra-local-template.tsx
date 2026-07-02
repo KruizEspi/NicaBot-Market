@@ -1,13 +1,14 @@
 import { Box } from "@mui/material";
-import type { Tienda } from "../types/tienda.type";
 import { AppHeader } from "../components/organisms/app-header";
-import { FloatingChatbot } from "../components/organisms/loating-chatbot";
+import { FloatingChatbot } from "../../compra-local/components/organisms/loating-chatbot";
 import { Sidebar } from "../components/organisms/sidebar";
 import { HomeHero } from "../components/organisms/store-hero";
 import { MissionVisionSection } from "../components/organisms/mission-vision-section";
-import {ValuesSection} from "../components/organisms/values-section";
-import {ObjectivesSection} from "../components/organisms/objectives-section";
-import {HomeActionsSection} from "../components/organisms/home-section";
+import { ValuesSection } from "../components/organisms/values-section";
+import { ObjectivesSection } from "../components/organisms/objectives-section";
+import { HomeActionsSection } from "../components/organisms/home-section";
+import { AdsBannerSection } from "../components/organisms/ads-banner-section";
+
 type CompraLocalTemplateProps = {
     chatOpen: boolean;
     onChatToggle: () => void;
@@ -49,6 +50,9 @@ export const CompraLocalTemplate = ({
                     }}
                 >
                     <HomeHero />
+
+                    <AdsBannerSection />
+
                     <MissionVisionSection />
                     <ValuesSection />
                     <ObjectivesSection />
