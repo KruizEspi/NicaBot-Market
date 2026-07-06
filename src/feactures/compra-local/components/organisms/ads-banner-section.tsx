@@ -8,7 +8,7 @@ const banners = [
             "Haz que más clientes descubran tus productos dentro de NicaBot Market.",
         buttonText: "Registrar tienda",
         path: "/agregar-tienda",
-        image: "/ave-tienda.png",
+        image: "/ave-anucio1.png",
         badge: "Anuncio",
         background:
             "linear-gradient(135deg, #064e3b 0%, #15803d 52%, #22c55e 100%)",
@@ -19,7 +19,7 @@ const banners = [
             "Encuentra productos, comida, ropa, tecnología y servicios cerca de ti.",
         buttonText: "Ver productos",
         path: "/productos",
-        image: "/ave-tienda.png",
+        image: "/ave-anuncio3.png",
         badge: "Destacado",
         background:
             "linear-gradient(135deg, #1e3a8a 0%, #2563eb 55%, #38bdf8 100%)",

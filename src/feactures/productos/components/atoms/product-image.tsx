@@ -16,11 +16,11 @@ export const ProductImage = ({ src, alt }: ProductImageProps) => {
             }}
             sx={{
                 width: "100%",
-                height: 160,
+                height: 170,
                 objectFit: "contain",
-                backgroundColor: "#f8fafc",
+                display: "block",
                 borderRadius: 3,
-                mb: 2,
+                backgroundColor: "transparent",
             }}
         />
     );
