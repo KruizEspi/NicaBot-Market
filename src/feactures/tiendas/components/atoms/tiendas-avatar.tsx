@@ -9,9 +9,9 @@ export const TiendaAvatar = ({ name }: TiendaAvatarProps) => {
         <Avatar
             sx={{
                 bgcolor: "#4cae50",
-                width: 52,
-                height: 52,
-                mr: 2,
+                width: 50,
+                height: 50,
+                mr: -0.1,
                 fontWeight: "bold",
             }}
         >
