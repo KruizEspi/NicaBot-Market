@@ -71,12 +71,22 @@ export const Sidebar = () => {
                     primary="Agregar tienda"
                     secondary="Registrar un negocio"
                 />
+                <SidebarItem
+                    to="/mapa-tiendas"
+                    primary="Mapa"
+                    secondary="Geolocalizacion de las tiendas"
+                />
             </List>
 
             <Divider />
 
+
             <List sx={{ p: 1 }}>
-                <SidebarItem primary="Favoritos" />
+                <SidebarItem
+                    to="/favoritos"
+                    primary="Favoritos"
+                    secondary="Productos y tiendas guardadas"
+                />
                 <SidebarItem primary="Mi cuenta" />
                 <SidebarItem primary="Configuración" />
             </List>

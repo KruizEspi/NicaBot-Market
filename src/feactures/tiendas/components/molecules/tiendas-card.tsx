@@ -3,12 +3,15 @@ import {
     Button,
     Card,
     CardContent,
-    Chip,
+    Chip, IconButton,
     Typography,
 } from "@mui/material";
 
 import type { Tienda } from "../../types/tienda.type";
 import { TiendaAvatar } from "../atoms/tiendas-avatar";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { useFavoritesStore } from "../../../favoritos/store/use-favorites-store";
 
 type TiendasCardProps = {
     tienda: Tienda;
@@ -16,6 +19,10 @@ type TiendasCardProps = {
 
 export const TiendasCard = ({ tienda }: TiendasCardProps) => {
     const isOpen = tienda.estado === "Abierto";
+
+    const { isStoreFavorite, toggleStoreFavorite } = useFavoritesStore();
+
+    const isFavorite = isStoreFavorite(tienda.id);
 
     return (
         <Card
@@ -61,8 +68,8 @@ export const TiendasCard = ({ tienda }: TiendasCardProps) => {
                 label={tienda.estado}
                 sx={{
                     position: "absolute",
-                    top: 14,
-                    right: 14,
+                    top: 16,
+                    right: 68,
                     zIndex: 3,
                     fontWeight: 900,
                     borderRadius: 999,
@@ -74,6 +81,33 @@ export const TiendasCard = ({ tienda }: TiendasCardProps) => {
                 }}
             />
 
+            <IconButton
+                onClick={() => toggleStoreFavorite(tienda)}
+                sx={{
+                    position: "absolute",
+                    top: 16,
+                    right: 16,
+                    zIndex: 5,
+                    width: 40,
+                    height: 40,
+                    backgroundColor: isFavorite ? "#fee2e2" : "rgba(255,255,255,0.92)",
+                    color: isFavorite ? "#dc2626" : "#064e3b",
+                    border: "1px solid rgba(255,255,255,0.45)",
+                    boxShadow: "0 10px 24px rgba(15, 23, 42, 0.18)",
+                    transition: "all 0.2s ease",
+                    "&:hover": {
+                        backgroundColor: "#fee2e2",
+                        color: "#dc2626",
+                        transform: "scale(1.05)",
+                    },
+                }}
+            >
+                {isFavorite ? (
+                    <FavoriteIcon fontSize="small" />
+                ) : (
+                    <FavoriteBorderIcon fontSize="small" />
+                )}
+            </IconButton>
             <CardContent
                 sx={{
                     p: 2.4,
@@ -173,6 +207,7 @@ export const TiendasCard = ({ tienda }: TiendasCardProps) => {
                     <InfoRow icon="📍" text={tienda.ubicacion} color="#eff6ff" />
                     <InfoRow icon="📞" text={tienda.telefono} color="#ecfdf5" />
                     <InfoRow icon="🕒" text={tienda.horario} color="#fffbeb" />
+
                 </Box>
 
                 <Box
@@ -204,6 +239,7 @@ export const TiendasCard = ({ tienda }: TiendasCardProps) => {
                         >
                             {isOpen ? "Disponible ahora" : "Fuera de horario"}
                         </Typography>
+
                     </Box>
 
                     <Button
@@ -234,6 +270,7 @@ export const TiendasCard = ({ tienda }: TiendasCardProps) => {
                     </Button>
                 </Box>
             </CardContent>
+
         </Card>
     );
 };

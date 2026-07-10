@@ -9,4 +9,6 @@ export type Tienda = {
     telefono: string;
     horario: string;
     estado: TiendaEstado;
+    lat: number;
+    lng: number;
 };

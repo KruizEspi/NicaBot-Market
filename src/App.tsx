@@ -6,6 +6,9 @@ import ProductosPage from "./feactures/productos/pages/productos.page";
 import TiendasPage from "./feactures/tiendas/page/tiendas.page";
 import AgregarTiendaPage from "./feactures/agregar-tienda/pages/agregar-tienda.page";
 import DashboardPage from "./feactures/dashboard/pages/dashboard.page";
+import FavoritosPage from "./feactures/favoritos/pages/favoritos.page";
+import "leaflet/dist/leaflet.css";
+import { MapaTiendasPage } from "./feactures/mapa-tiendas";
 
 export default function App() {
     return (
@@ -17,7 +20,11 @@ export default function App() {
                 <Route path="/productos" element={<ProductosPage />} />
                 <Route path="/tiendas" element={<TiendasPage />} />
                 <Route path="/agregar-tienda" element={<AgregarTiendaPage />} />
+                <Route path="/favoritos" element={<FavoritosPage />} />
+                <Route path="/mapa-tiendas" element={<MapaTiendasPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
+
+
             </Routes>
         </BrowserRouter>
     );

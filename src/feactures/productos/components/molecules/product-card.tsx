@@ -9,6 +9,10 @@ import {
 
 import type { Producto } from "../../types/producto.type";
 import { ProductImage } from "../atoms/product-image";
+import FavoriteIcon from "@mui/icons-material/Favorite";
+import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
+import { IconButton } from "@mui/material";
+import { useFavoritesStore } from "../../../favoritos/store/use-favorites-store";
 
 type ProductCardProps = {
     producto: Producto;
@@ -16,7 +20,9 @@ type ProductCardProps = {
 
 export const ProductCard = ({ producto }: ProductCardProps) => {
     const isAvailable = producto.estado === "Disponible";
+    const { isProductFavorite, toggleProductFavorite } = useFavoritesStore();
 
+    const isFavorite = isProductFavorite(producto.id);
     return (
         <Card
             elevation={0}
@@ -104,7 +110,8 @@ export const ProductCard = ({ producto }: ProductCardProps) => {
                         sx={{
                             position: "absolute",
                             top: 12,
-                            right: 12,
+                            right: 58,
+                            zIndex: 4,
                             fontWeight: 800,
                             borderRadius: 999,
                             backgroundColor: isAvailable ? "#16a34a" : "#e5e7eb",
@@ -114,6 +121,34 @@ export const ProductCard = ({ producto }: ProductCardProps) => {
                                 : "none",
                         }}
                     />
+
+                    <IconButton
+                        onClick={() => toggleProductFavorite(producto)}
+                        sx={{
+                            position: "absolute",
+                            top: 8,
+                            right: 8,
+                            zIndex: 5,
+                            width: 42,
+                            height: 42,
+                            backgroundColor: isFavorite ? "#fee2e2" : "rgba(255,255,255,0.94)",
+                            color: isFavorite ? "#dc2626" : "#64748b",
+                            border: "1px solid #e2e8f0",
+                            boxShadow: "0 10px 24px rgba(15, 23, 42, 0.14)",
+                            transition: "all 0.2s ease",
+                            "&:hover": {
+                                backgroundColor: "#fee2e2",
+                                color: "#dc2626",
+                                transform: "scale(1.05)",
+                            },
+                        }}
+                    >
+                        {isFavorite ? (
+                            <FavoriteIcon fontSize="small" />
+                        ) : (
+                            <FavoriteBorderIcon fontSize="small" />
+                        )}
+                    </IconButton>
                 </Box>
 
                 <Box sx={{ mb: 1.4 }}>
@@ -304,6 +339,8 @@ export const ProductCard = ({ producto }: ProductCardProps) => {
                     {isAvailable ? "Ver producto" : "No disponible"}
                 </Button>
             </CardContent>
+
         </Card>
+
     );
 };

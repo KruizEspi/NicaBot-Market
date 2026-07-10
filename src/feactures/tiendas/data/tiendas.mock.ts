@@ -10,6 +10,8 @@ export const tiendasMock: Tienda[] = [
         telefono: "8888-1111",
         horario: "Lunes a sábado, 7:00 AM - 8:00 PM",
         estado: "Abierto",
+        lat: 12.1224,
+        lng: -86.2362,
     },
     {
         id: 2,
@@ -20,6 +22,8 @@ export const tiendasMock: Tienda[] = [
         telefono: "8888-2222",
         horario: "Lunes a domingo, 9:00 AM - 6:00 PM",
         estado: "Abierto",
+        lat: 12.1456,
+        lng: -86.2573,
     },
     {
         id: 3,
@@ -30,6 +34,8 @@ export const tiendasMock: Tienda[] = [
         telefono: "8888-3333",
         horario: "Lunes a sábado, 8:00 AM - 5:00 PM",
         estado: "Cerrado",
+        lat: 12.1528,
+        lng: -86.3025,
     },
     {
         id: 4,
@@ -40,6 +46,8 @@ export const tiendasMock: Tienda[] = [
         telefono: "8888-4444",
         horario: "Lunes a viernes, 10:00 AM - 3:00 PM",
         estado: "Abierto",
+        lat: 12.1168,
+        lng: -86.2519,
     },
     {
         id: 5,
@@ -50,6 +58,8 @@ export const tiendasMock: Tienda[] = [
         telefono: "8888-5555",
         horario: "Lunes a sábado, 9:00 AM - 5:00 PM",
         estado: "Abierto",
+        lat: 12.1016,
+        lng: -86.2482,
     },
     {
         id: 6,
@@ -60,5 +70,7 @@ export const tiendasMock: Tienda[] = [
         telefono: "8888-6666",
         horario: "Lunes a domingo, 7:00 AM - 9:00 PM",
         estado: "Cerrado",
+        lat: 12.1369,
+        lng: -86.2404,
     },
 ];
