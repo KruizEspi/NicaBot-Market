@@ -66,15 +66,16 @@ export const Sidebar = () => {
                     secondary="Negocios registrados"
                 />
 
-                <SidebarItem
-                    to="/agregar-tienda"
-                    primary="Agregar tienda"
-                    secondary="Registrar un negocio"
-                />
+
                 <SidebarItem
                     to="/mapa-tiendas"
                     primary="Mapa"
                     secondary="Geolocalizacion de las tiendas"
+                />
+                <SidebarItem
+                    to="/agregar-tienda"
+                    primary="Agregar tienda"
+                    secondary="Registrar un negocio"
                 />
             </List>
 

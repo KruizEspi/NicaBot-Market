@@ -6,6 +6,7 @@ import {
     Chip,
     Typography,
 } from "@mui/material";
+import { NavLink } from "react-router-dom";
 
 import type { Producto } from "../../types/producto.type";
 import { ProductImage } from "../atoms/product-image";
@@ -311,11 +312,14 @@ export const ProductCard = ({ producto }: ProductCardProps) => {
                 </Box>
 
                 <Button
+                    component={NavLink}
+                    to={`/productos/${producto.id}`}
                     fullWidth
                     variant="contained"
                     disabled={!isAvailable}
                     sx={{
                         textTransform: "none",
+                        textDecoration: "none",
                         borderRadius: 999,
                         py: 1.15,
                         fontWeight: 900,

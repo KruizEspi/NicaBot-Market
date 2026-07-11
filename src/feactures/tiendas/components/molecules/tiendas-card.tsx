@@ -12,6 +12,7 @@ import { TiendaAvatar } from "../atoms/tiendas-avatar";
 import FavoriteIcon from "@mui/icons-material/Favorite";
 import FavoriteBorderIcon from "@mui/icons-material/FavoriteBorder";
 import { useFavoritesStore } from "../../../favoritos/store/use-favorites-store";
+import { NavLink } from "react-router-dom";
 
 type TiendasCardProps = {
     tienda: Tienda;
@@ -241,12 +242,14 @@ export const TiendasCard = ({ tienda }: TiendasCardProps) => {
                         </Typography>
 
                     </Box>
-
                     <Button
+                        component={NavLink}
+                        to={`/tiendas/${tienda.id}`}
                         variant="contained"
                         size="small"
                         sx={{
                             textTransform: "none",
+                            textDecoration: "none",
                             borderRadius: 999,
                             px: 2.4,
                             py: 0.9,

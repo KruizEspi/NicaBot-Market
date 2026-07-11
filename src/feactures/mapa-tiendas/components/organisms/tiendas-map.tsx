@@ -1,5 +1,13 @@
-import { Box, Chip, Paper, Typography } from "@mui/material";
-import { MapContainer, Marker, Popup, TileLayer } from "react-leaflet";
+import { useEffect } from "react";
+import { useSearchParams } from "react-router-dom";
+import { Box, Button, Chip, Paper, Typography } from "@mui/material";
+import {
+    MapContainer,
+    Marker,
+    Popup,
+    TileLayer,
+    useMap,
+} from "react-leaflet";
 import L, { type LatLngExpression } from "leaflet";
 
 import type { Tienda } from "../../../tiendas/types/tienda.type";
@@ -18,10 +26,22 @@ const storeIcon = L.icon({
 });
 
 export const TiendasMap = ({ tiendas }: TiendasMapProps) => {
+    const [searchParams] = useSearchParams();
+
+    const tiendaId = Number(searchParams.get("tiendaId"));
+
     const tiendasConUbicacion = tiendas.filter(
         (tienda) =>
             typeof tienda.lat === "number" && typeof tienda.lng === "number",
     );
+
+    const tiendaSeleccionada = tiendasConUbicacion.find(
+        (tienda) => tienda.id === tiendaId,
+    );
+
+    const mapCenter: LatLngExpression = tiendaSeleccionada
+        ? [tiendaSeleccionada.lat, tiendaSeleccionada.lng]
+        : center;
 
     return (
         <Paper
@@ -52,21 +72,73 @@ export const TiendasMap = ({ tiendas }: TiendasMapProps) => {
                     </Typography>
 
                     <Typography variant="body2" sx={{ color: "#64748b" }}>
-                        Ubicación aproximada de los negocios registrados.
+                        {tiendaSeleccionada
+                            ? `Ubicación de ${tiendaSeleccionada.nombre}`
+                            : "Ubicación aproximada de los negocios registrados."}
                     </Typography>
                 </Box>
 
                 <Chip
-                    label={`${tiendasConUbicacion.length} tiendas en el mapa`}
+                    label={
+                        tiendaSeleccionada
+                            ? "Tienda seleccionada"
+                            : `${tiendasConUbicacion.length} tiendas en el mapa`
+                    }
                     color="success"
                     variant="outlined"
                     sx={{ fontWeight: 800 }}
                 />
             </Box>
 
+            {tiendaSeleccionada && (
+                <Paper
+                    elevation={0}
+                    sx={{
+                        mb: 2,
+                        p: 2,
+                        borderRadius: 3,
+                        border: "1px solid #bbf7d0",
+                        backgroundColor: "#f0fdf4",
+                        display: "flex",
+                        alignItems: { xs: "flex-start", md: "center" },
+                        justifyContent: "space-between",
+                        gap: 2,
+                        flexDirection: { xs: "column", md: "row" },
+                    }}
+                >
+                    <Box>
+                        <Typography sx={{ fontWeight: 900, color: "#064e3b" }}>
+                            {tiendaSeleccionada.nombre}
+                        </Typography>
+
+                        <Typography variant="body2" sx={{ color: "#166534" }}>
+                            {tiendaSeleccionada.ubicacion}
+                        </Typography>
+                    </Box>
+
+                    <Button
+                        href={`/tiendas/${tiendaSeleccionada.id}`}
+                        sx={{
+                            textTransform: "none",
+                            borderRadius: 999,
+                            fontWeight: 900,
+                            color: "#15803d",
+                            backgroundColor: "#fff",
+                            border: "1px solid #86efac",
+                            px: 2.5,
+                            "&:hover": {
+                                backgroundColor: "#dcfce7",
+                            },
+                        }}
+                    >
+                        Ver perfil
+                    </Button>
+                </Paper>
+            )}
+
             <Box
                 sx={{
-                    height: { xs: 360, md: 860 },
+                    height: { xs: 360, md: 995 },
                     borderRadius: 3,
                     overflow: "hidden",
                     border: "1px solid #e2e8f0",
@@ -77,11 +149,13 @@ export const TiendasMap = ({ tiendas }: TiendasMapProps) => {
                 }}
             >
                 <MapContainer
-                    center={center}
-                    zoom={12}
+                    center={mapCenter}
+                    zoom={tiendaSeleccionada ? 16 : 12}
                     scrollWheelZoom={true}
                     style={{ height: "100%", width: "100%" }}
                 >
+                    <MapFocus tienda={tiendaSeleccionada} />
+
                     <TileLayer
                         attribution="&copy; OpenStreetMap contributors"
                         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -89,6 +163,7 @@ export const TiendasMap = ({ tiendas }: TiendasMapProps) => {
 
                     {tiendasConUbicacion.map((tienda) => {
                         const position: LatLngExpression = [tienda.lat, tienda.lng];
+                        const isSelected = tienda.id === tiendaSeleccionada?.id;
 
                         return (
                             <Marker key={tienda.id} position={position} icon={storeIcon}>
@@ -105,12 +180,14 @@ export const TiendasMap = ({ tiendas }: TiendasMapProps) => {
                                             {tienda.categoria}
                                         </Typography>
 
-                                        <Chip
-                                            label={tienda.estado}
-                                            size="small"
-                                            color={tienda.estado === "Abierto" ? "success" : "default"}
-                                            sx={{ fontWeight: 800, mb: 1 }}
-                                        />
+                                        {isSelected && (
+                                            <Chip
+                                                label="Seleccionada"
+                                                size="small"
+                                                color="success"
+                                                sx={{ fontWeight: 800, mb: 1 }}
+                                            />
+                                        )}
 
                                         <Typography variant="body2">
                                             📍 {tienda.ubicacion}
@@ -119,6 +196,19 @@ export const TiendasMap = ({ tiendas }: TiendasMapProps) => {
                                         <Typography variant="body2">
                                             📞 {tienda.telefono}
                                         </Typography>
+
+                                        <Button
+                                            href={`/tiendas/${tienda.id}`}
+                                            size="small"
+                                            sx={{
+                                                mt: 1,
+                                                textTransform: "none",
+                                                fontWeight: 800,
+                                                color: "#15803d",
+                                            }}
+                                        >
+                                            Ver perfil
+                                        </Button>
                                     </Box>
                                 </Popup>
                             </Marker>
@@ -128,4 +218,22 @@ export const TiendasMap = ({ tiendas }: TiendasMapProps) => {
             </Box>
         </Paper>
     );
+};
+
+type MapFocusProps = {
+    tienda?: Tienda;
+};
+
+const MapFocus = ({ tienda }: MapFocusProps) => {
+    const map = useMap();
+
+    useEffect(() => {
+        if (!tienda) return;
+
+        map.setView([tienda.lat, tienda.lng], 16, {
+            animate: true,
+        });
+    }, [map, tienda]);
+
+    return null;
 };
