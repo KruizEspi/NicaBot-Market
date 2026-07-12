@@ -1,6 +1,6 @@
 import { Box } from "@mui/material";
 import { AppHeader } from "../components/organisms/app-header";
-import { FloatingChatbot } from "../../compra-local/components/organisms/loating-chatbot";
+import { FloatingChatbot } from "../../chat-bot-ia/components/organisms/loating-chatbot";
 import { Sidebar } from "../components/organisms/sidebar";
 import { HomeHero } from "../components/organisms/store-hero";
 import { MissionVisionSection } from "../components/organisms/mission-vision-section";

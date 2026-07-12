@@ -11,6 +11,7 @@ import "leaflet/dist/leaflet.css";
 import { MapaTiendasPage } from "./feactures/mapa-tiendas";
 import TiendaProfilePage from "./feactures/tiendas/page/tienda-profile.page";
 import ProductoProfilePage from "./feactures/productos/pages/producto-profile.page";
+import MiCuentaPage from "./feactures/mi-cuenta/pages/mi-cuenta.page";
 
 export default function App() {
     return (
@@ -26,6 +27,7 @@ export default function App() {
                 <Route path="/favoritos" element={<FavoritosPage />} />
                 <Route path="/mapa-tiendas" element={<MapaTiendasPage />} />
                 <Route path="/tiendas/:tiendaId" element={<TiendaProfilePage />} />
+                <Route path="/mi-cuenta" element={<MiCuentaPage />} />
                 <Route path="*" element={<Navigate to="/" replace />} />
 
 

@@ -1,7 +1,7 @@
 import { Box } from "@mui/material";
 import { AppHeader } from "../../compra-local/components/organisms/app-header";
 import { Sidebar } from "../../compra-local/components/organisms/sidebar";
-import { FloatingChatbot } from "../../compra-local/components/organisms/loating-chatbot";
+import { FloatingChatbot } from "../../chat-bot-ia/components/organisms/loating-chatbot";
 import type { AgregarTiendaForm as AgregarTiendaFormType } from "../types/agregar-tienda-form.type";
 import { AgregarTiendaHero } from "../../agregar-tienda/components/organisms/agregar-tienda-hero";
 import { AgregarTiendaForm } from "../../agregar-tienda/components/organisms/agregar-tienda-form";

@@ -1,26 +1,13 @@
 import { Box } from "@mui/material";
+
 import { AppHeader } from "../../../compra-local/components/organisms/app-header";
 import { Sidebar } from "../../../compra-local/components/organisms/sidebar";
-import { FloatingChatbot } from "../../../chat-bot-ia/components/organisms/loating-chatbot";
-import type { Tienda } from "../../types/tienda.type";
-import { TiendasHero } from "../organisms/tiendas-hero";
-import { TiendasSection } from "../organisms/tiendas-section";
+import { AccountProfileCard } from "../organisms/account-profile-card";
+import { AccountStatsSection } from "../organisms/account-stats-section";
+import { AccountActionsSection } from "../organisms/account-actions-section";
+import { AccountSettingsSection } from "../organisms/account-settings-section";
 
-type TiendasTemplateProps = {
-    search: string;
-    tiendas: Tienda[];
-    chatOpen: boolean;
-    onSearchChange: (value: string) => void;
-    onChatToggle: () => void;
-};
-
-export const TiendasTemplate = ({
-                                    search,
-                                    tiendas,
-                                    chatOpen,
-                                    onSearchChange,
-                                    onChatToggle,
-                                }: TiendasTemplateProps) => {
+export const MiCuentaTemplate = () => {
     return (
         <Box sx={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}>
             <AppHeader />
@@ -50,14 +37,16 @@ export const TiendasTemplate = ({
                         flexGrow: 1,
                         minWidth: 0,
                         p: { xs: 2, md: 4 },
+                        display: "grid",
+                        gap: 3,
                     }}
                 >
-                    <TiendasHero search={search} onSearchChange={onSearchChange} />
-                    <TiendasSection tiendas={tiendas} />
+                    <AccountProfileCard />
+                    <AccountStatsSection />
+                    <AccountActionsSection />
+                    <AccountSettingsSection />
                 </Box>
             </Box>
-
-            <FloatingChatbot open={chatOpen} onToggle={onChatToggle} />
         </Box>
     );
 };

@@ -88,7 +88,11 @@ export const Sidebar = () => {
                     primary="Favoritos"
                     secondary="Productos y tiendas guardadas"
                 />
-                <SidebarItem primary="Mi cuenta" />
+                <SidebarItem
+                    to="/mi-cuenta"
+                    primary="Mi cuenta"
+                    secondary="Perfil y configuración"
+                />
                 <SidebarItem primary="Configuración" />
             </List>
         </Box>

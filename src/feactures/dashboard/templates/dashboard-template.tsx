@@ -2,7 +2,7 @@ import { Box } from "@mui/material";
 
 import { AppHeader } from "../../compra-local/components/organisms/app-header";
 import { Sidebar } from "../../compra-local/components/organisms/sidebar";
-import { FloatingChatbot } from "../../compra-local/components/organisms/loating-chatbot";
+import { FloatingChatbot } from "../../chat-bot-ia/components/organisms/loating-chatbot";
 
 import type {
     DashboardAction,
