@@ -267,7 +267,7 @@ export const FloatingChatbot = ({
     };
 
     const handleInputKeyDown = (
-        event: KeyboardEvent<HTMLInputElement>,
+        event: React.KeyboardEvent,
     ) => {
         if (
             event.key === "Enter" &&
@@ -276,7 +276,7 @@ export const FloatingChatbot = ({
         ) {
             event.preventDefault();
 
-            event.currentTarget.form?.requestSubmit();
+            handleSubmit(event as unknown as FormEvent<HTMLFormElement>);
         }
     };
 

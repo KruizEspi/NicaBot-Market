@@ -1,5 +1,8 @@
 import { useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 import type { LoginForm, UserRole } from "../types/login-form.type";
+import { useAuthStore } from "../../../shared/store/use-auth-store";
 
 const initialForm: LoginForm = {
     email: "",
@@ -9,8 +12,12 @@ const initialForm: LoginForm = {
 };
 
 export const useLoginForm = () => {
+    const navigate = useNavigate();
+
     const [form, setForm] = useState<LoginForm>(initialForm);
     const [showPassword, setShowPassword] = useState(false);
+
+    const { loginAsAdmin, loginAsCliente, loginAsNegocio } = useAuthStore();
 
     const handleChange = (
         field: keyof LoginForm,
@@ -30,19 +37,22 @@ export const useLoginForm = () => {
     };
 
     const handleSubmit = () => {
-        console.log("Login:", form);
+        if (!form.email || !form.password) return;
 
         if (form.role === "admin") {
-            window.location.href = "/dashboard";
+            loginAsAdmin(form.email);
+            navigate("/dashboard");
             return;
         }
 
         if (form.role === "negocio") {
-            window.location.href = "/dashboard";
+            loginAsNegocio(form.email);
+            navigate("/productos");
             return;
         }
 
-        window.location.href = "/";
+        loginAsCliente(form.email);
+        navigate("/productos");
     };
 
     const isDisabled = !form.email || !form.password;

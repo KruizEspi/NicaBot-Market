@@ -1,99 +1,128 @@
-import { Box, Divider, List, Typography } from "@mui/material";
+import { Box, List, Typography } from "@mui/material";
+
 import { SidebarItem } from "../molecules/sidebar-items";
+import { canAccessRoute } from "../../../../shared/auth/role-permissions";
+import { useAuthStore } from "../../../../shared/store/use-auth-store";
 
 export const Sidebar = () => {
+    const { user, isAuthenticated, logout } = useAuthStore();
+
+    const roleId = user?.role.id;
+
     return (
-        <Box sx={{ width: 280 }}>
-            <Box
+        <Box sx={{ p: 2 }}>
+            <Typography
                 sx={{
-                    p: 2,
-                    borderBottom: "1px solid #e2e8f0",
-                    backgroundColor: "#fff",
+                    fontWeight: 950,
+                    color: "#064e3b",
+                    mb: 2,
+                    fontSize: 18,
                 }}
             >
-                <Box
-                    component="img"
-                    src="/FondoAve.png"
-                    alt="NicaBot Market"
-                    sx={{
-                        width: "100%",
-                        height: 150,
-                        objectFit: "contain",
-                        display: "block",
-                        borderRadius: 3,
-                        backgroundColor: "#f8fafc",
-                    }}
-                />
+                NicaBot Market
+            </Typography>
 
-                <Typography
-                    variant="h6"
-                    sx={{
-                        mt: 2,
-                        fontWeight: "bold",
-                        color: "#1e293b",
-                    }}
-                >
-                    NicaBot Market
-                </Typography>
+            <List disablePadding>
+                {canAccessRoute("inicio", roleId) && (
+                    <SidebarItem
+                        to="/"
+                        primary="Inicio"
+                        secondary="Resumen de la plataforma"
+                    />
+                )}
 
-                <Typography variant="body2" sx={{ color: "#64748b" }}>
-                    Marketplace local con asistencia inteligente.
-                </Typography>
-            </Box>
+                {canAccessRoute("dashboard", roleId) && (
+                    <SidebarItem
+                        to="/dashboard"
+                        primary="Dashboard"
+                        secondary="Panel administrador"
+                    />
+                )}
 
-            <List sx={{ p: 1 }}>
-                <SidebarItem
-                    to="/"
-                    primary="Inicio"
-                    secondary="Resumen de la plataforma"
-                />
+                {canAccessRoute("productos", roleId) && (
+                    <SidebarItem
+                        to="/productos"
+                        primary="Productos"
+                        secondary="Buscar productos locales"
+                    />
+                )}
 
-                <SidebarItem
-                    to="/dashboard"
-                    primary="Dashboard"
-                    secondary="Panel de administración"
-                />
+                {canAccessRoute("tiendas", roleId) && (
+                    <SidebarItem
+                        to="/tiendas"
+                        primary="Tiendas"
+                        secondary="Negocios registrados"
+                    />
+                )}
 
-                <SidebarItem
-                    to="/productos"
-                    primary="Productos"
-                    secondary="Buscar productos locales"
-                />
+                {canAccessRoute("mapa", roleId) && (
+                    <SidebarItem
+                        to="/mapa-tiendas"
+                        primary="Mapa de tiendas"
+                        secondary="Ubicación de negocios"
+                    />
+                )}
 
-                <SidebarItem
-                    to="/tiendas"
-                    primary="Tiendas"
-                    secondary="Negocios registrados"
-                />
+                {canAccessRoute("favoritos", roleId) && (
+                    <SidebarItem
+                        to="/favoritos"
+                        primary="Favoritos"
+                        secondary="Productos y tiendas guardadas"
+                    />
+                )}
 
+                {canAccessRoute("agregarTienda", roleId) && (
+                    <SidebarItem
+                        to="/agregar-tienda"
+                        primary="Agregar tienda"
+                        secondary="Registrar negocio"
+                    />
+                )}
 
-                <SidebarItem
-                    to="/mapa-tiendas"
-                    primary="Mapa"
-                    secondary="Geolocalizacion de las tiendas"
-                />
-                <SidebarItem
-                    to="/agregar-tienda"
-                    primary="Agregar tienda"
-                    secondary="Registrar un negocio"
-                />
-            </List>
+                {canAccessRoute("reportes", roleId) && (
+                    <SidebarItem
+                        to="/reportes"
+                        primary="Reportes"
+                        secondary="Búsquedas y resultados"
+                    />
+                )}
 
-            <Divider />
+                {canAccessRoute("miCuenta", roleId) && (
+                    <SidebarItem
+                        to="/mi-cuenta"
+                        primary="Mi cuenta"
+                        secondary="Perfil y configuración"
+                    />
+                )}
 
+                {!isAuthenticated && (
+                    <SidebarItem
+                        to="/login"
+                        primary="Entrar"
+                        secondary="Iniciar sesión"
+                    />
+                )}
 
-            <List sx={{ p: 1 }}>
-                <SidebarItem
-                    to="/favoritos"
-                    primary="Favoritos"
-                    secondary="Productos y tiendas guardadas"
-                />
-                <SidebarItem
-                    to="/mi-cuenta"
-                    primary="Mi cuenta"
-                    secondary="Perfil y configuración"
-                />
-                <SidebarItem primary="Configuración" />
+                {isAuthenticated && (
+                    <Box
+                        onClick={logout}
+                        sx={{
+                            mt: 2,
+                            p: 1.5,
+                            borderRadius: 2,
+                            cursor: "pointer",
+                            color: "#dc2626",
+                            fontWeight: 900,
+                            backgroundColor: "#fef2f2",
+                            border: "1px solid #fecaca",
+                            "&:hover": {
+                                backgroundColor: "#fee2e2",
+                            },
+                        }}
+                    >
+                        Cerrar sesión
+                    </Box>
+                )}
             </List>
         </Box>
     );

@@ -7,6 +7,8 @@ import { AppHeader } from "../../compra-local/components/organisms/app-header";
 import { Sidebar } from "../../compra-local/components/organisms/sidebar";
 import { tiendasMock } from "../data/tiendas.mock";
 import { TiendaAvatar } from "../components/atoms/tiendas-avatar";
+import { productosMock } from "../../productos/data/productos.mock";
+import { ProductCard } from "../../productos/components/molecules/product-card";
 
 export default function TiendaProfilePage() {
     const [openContact, setOpenContact] = useState(false);
@@ -86,6 +88,10 @@ export default function TiendaProfilePage() {
     }
 
     const isOpen = tienda.estado === "Abierto";
+
+    const productosDeLaTienda = productosMock.filter(
+        (producto) => producto.tienda === tienda.nombre,
+    );
 
     return (
         <>
@@ -355,6 +361,125 @@ export default function TiendaProfilePage() {
                                     </Button>
                                 </Paper>
                             </Box>
+                        </Paper>
+
+                        <Paper
+                            elevation={0}
+                            sx={{
+                                mt: 3,
+                                p: { xs: 2.5, md: 3 },
+                                borderRadius: 5,
+                                border: "1px solid #e2e8f0",
+                                backgroundColor: "#fff",
+                                boxShadow: "0 18px 50px rgba(15, 23, 42, 0.06)",
+                            }}
+                        >
+                            <Box
+                                sx={{
+                                    mb: 3,
+                                    display: "flex",
+                                    justifyContent: "space-between",
+                                    alignItems: { xs: "flex-start", md: "center" },
+                                    gap: 2,
+                                    flexDirection: { xs: "column", md: "row" },
+                                }}
+                            >
+                                <Box>
+                                    <Typography
+                                        variant="h5"
+                                        sx={{
+                                            fontWeight: 900,
+                                            color: "#0f172a",
+                                            mb: 0.5,
+                                        }}
+                                    >
+                                        Productos de la tienda
+                                    </Typography>
+
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                            color: "#64748b",
+                                            lineHeight: 1.6,
+                                        }}
+                                    >
+                                        Estos son los productos registrados por {tienda.nombre}.
+                                    </Typography>
+                                </Box>
+
+                                <Chip
+                                    label={`${productosDeLaTienda.length} productos`}
+                                    color="success"
+                                    variant="outlined"
+                                    sx={{
+                                        fontWeight: 900,
+                                        borderRadius: 999,
+                                    }}
+                                />
+                            </Box>
+
+                            {productosDeLaTienda.length > 0 ? (
+                                <Box
+                                    sx={{
+                                        display: "grid",
+                                        gridTemplateColumns: {
+                                            xs: "1fr",
+                                            sm: "repeat(2, minmax(0, 1fr))",
+                                            lg: "repeat(3, minmax(0, 1fr))",
+                                        },
+                                        gap: 3,
+                                    }}
+                                >
+                                    {productosDeLaTienda.map((producto) => (
+                                        <ProductCard key={producto.id} producto={producto} />
+                                    ))}
+                                </Box>
+                            ) : (
+                                <Paper
+                                    elevation={0}
+                                    sx={{
+                                        p: { xs: 4, md: 5 },
+                                        textAlign: "center",
+                                        borderRadius: 4,
+                                        border: "1px dashed #86efac",
+                                        background:
+                                            "linear-gradient(135deg, #ffffff 0%, #f8fafc 60%, #ecfdf5 100%)",
+                                    }}
+                                >
+                                    <Typography
+                                        sx={{
+                                            fontSize: 42,
+                                            mb: 1,
+                                        }}
+                                    >
+                                        🛍️
+                                    </Typography>
+
+                                    <Typography
+                                        variant="h6"
+                                        sx={{
+                                            fontWeight: 900,
+                                            color: "#0f172a",
+                                            mb: 1,
+                                        }}
+                                    >
+                                        Esta tienda aún no tiene productos registrados
+                                    </Typography>
+
+                                    <Typography
+                                        variant="body2"
+                                        sx={{
+                                            color: "#64748b",
+                                            maxWidth: 420,
+                                            mx: "auto",
+                                            lineHeight: 1.7,
+                                        }}
+                                    >
+                                        Cuando la tienda agregue productos, aparecerán en esta
+                                        sección.
+                                    </Typography>
+                                </Paper>
+                            )}
                         </Paper>
                     </Box>
                 </Box>
