@@ -1,8 +1,12 @@
 import { create } from "zustand";
 
-export type UserRoleId = 1 | 2 | 3;
+export type UserRoleId = 1 | 2 | 3 | 4;
 
-export type UserRoleName = "Administrador" | "Cliente" | "Negocio";
+export type UserRoleName =
+    | "Administrador"
+    | "Cliente"
+    | "Negocio"
+    | "Repartidor";
 
 export type AuthUser = {
     id: number;
@@ -21,12 +25,26 @@ type AuthStore = {
     loginAsAdmin: (email: string) => void;
     loginAsCliente: (email: string) => void;
     loginAsNegocio: (email: string) => void;
+    loginAsRepartidor: (email: string) => void;
     logout: () => void;
 };
 
 export const useAuthStore = create<AuthStore>((set) => ({
     user: null,
     isAuthenticated: false,
+    loginAsRepartidor: (email) =>
+        set({
+            isAuthenticated: true,
+            user: {
+                id: 4,
+                name: "Repartidor",
+                email,
+                role: {
+                    id: 4,
+                    name: "Repartidor",
+                },
+            },
+        }),
 
     loginAsAdmin: (email) =>
         set({

@@ -17,7 +17,12 @@ export const useLoginForm = () => {
     const [form, setForm] = useState<LoginForm>(initialForm);
     const [showPassword, setShowPassword] = useState(false);
 
-    const { loginAsAdmin, loginAsCliente, loginAsNegocio } = useAuthStore();
+    const {
+        loginAsAdmin,
+        loginAsCliente,
+        loginAsNegocio,
+        loginAsRepartidor,
+    } = useAuthStore();
 
     const handleChange = (
         field: keyof LoginForm,
@@ -51,10 +56,15 @@ export const useLoginForm = () => {
             return;
         }
 
+        if (form.role === "repartidor") {
+            loginAsRepartidor(form.email);
+            navigate("/delivery");
+            return;
+        }
+
         loginAsCliente(form.email);
         navigate("/productos");
     };
-
     const isDisabled = !form.email || !form.password;
 
     return {

@@ -55,6 +55,7 @@ export const Sidebar = () => {
                     />
                 )}
 
+
                 {canAccessRoute("mapa", roleId) && (
                     <SidebarItem
                         to="/mapa-tiendas"
@@ -76,6 +77,22 @@ export const Sidebar = () => {
                         to="/agregar-tienda"
                         primary="Agregar tienda"
                         secondary="Registrar negocio"
+                    />
+                )}
+
+                {canAccessRoute("agregarProducto", roleId) && (
+                    <SidebarItem
+                        to="/agregar-producto"
+                        primary="Agregar producto"
+                        secondary="Vincular producto a tienda"
+                    />
+                )}
+
+                {canAccessRoute("delivery", roleId) && (
+                    <SidebarItem
+                        to="/delivery"
+                        primary="Delivery"
+                        secondary="Pedidos disponibles"
                     />
                 )}
 

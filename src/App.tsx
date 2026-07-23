@@ -12,7 +12,8 @@ import { MapaTiendasPage } from "./feactures/mapa-tiendas";
 import TiendaProfilePage from "./feactures/tiendas/page/tienda-profile.page";
 import ProductoProfilePage from "./feactures/productos/pages/producto-profile.page";
 import MiCuentaPage from "./feactures/mi-cuenta/pages/mi-cuenta.page";
-
+import {AgregarProductoPage} from "./feactures/agregar-productos";
+import {DeliveryPage} from "./feactures/delivery";
 import { ProtectedRoute } from "./shared/auth/protected-route";
 
 export default function App() {
@@ -84,6 +85,14 @@ export default function App() {
                         </ProtectedRoute>
                     }
                 />
+                <Route
+                    path="/agregar-producto"
+                    element={
+                        <ProtectedRoute routeKey="agregarProducto">
+                            <AgregarProductoPage />
+                        </ProtectedRoute>
+                    }
+                />
 
                 <Route
                     path="/dashboard"
@@ -108,6 +117,15 @@ export default function App() {
                     element={
                         <ProtectedRoute routeKey="reportes">
                             <ReportesPage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/delivery"
+                    element={
+                        <ProtectedRoute routeKey="delivery">
+                            <DeliveryPage />
                         </ProtectedRoute>
                     }
                 />

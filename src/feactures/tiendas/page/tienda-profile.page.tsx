@@ -7,7 +7,7 @@ import { AppHeader } from "../../compra-local/components/organisms/app-header";
 import { Sidebar } from "../../compra-local/components/organisms/sidebar";
 import { tiendasMock } from "../data/tiendas.mock";
 import { TiendaAvatar } from "../components/atoms/tiendas-avatar";
-import { productosMock } from "../../productos/data/productos.mock";
+import { useProductosStore } from "../../productos/store/use-producto-store";
 import { ProductCard } from "../../productos/components/molecules/product-card";
 
 export default function TiendaProfilePage() {
@@ -16,6 +16,7 @@ export default function TiendaProfilePage() {
     const { tiendaId } = useParams();
 
     const tienda = tiendasMock.find((item) => item.id === Number(tiendaId));
+    const { productos } = useProductosStore();
 
     if (!tienda) {
         return (
@@ -89,7 +90,7 @@ export default function TiendaProfilePage() {
 
     const isOpen = tienda.estado === "Abierto";
 
-    const productosDeLaTienda = productosMock.filter(
+    const productosDeLaTienda = productos.filter(
         (producto) => producto.tienda === tienda.nombre,
     );
 

@@ -1,0 +1,1 @@
+export { default as AgregarProductoPage } from "../agregar-productos/pages/agregar-productos.page";

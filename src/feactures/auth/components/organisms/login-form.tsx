@@ -17,8 +17,12 @@ import VisibilityOff from "@mui/icons-material/VisibilityOff";
 import StorefrontIcon from "@mui/icons-material/Storefront";
 import AdminPanelSettingsIcon from "@mui/icons-material/AdminPanelSettings";
 import PersonIcon from "@mui/icons-material/Person";
+import DeliveryDiningIcon from "@mui/icons-material/DeliveryDining";
 
-import type { LoginForm as LoginFormType, UserRole } from "../../types/login-form.type";
+import type {
+    LoginForm as LoginFormType,
+    UserRole,
+} from "../../types/login-form.type";
 import { AuthLogo } from "../atoms/auth-logo";
 
 type LoginFormProps = {
@@ -50,6 +54,12 @@ const roles: {
         icon: <StorefrontIcon />,
     },
     {
+        label: "Repartidor",
+        value: "repartidor",
+        description: "Tomar pedidos delivery",
+        icon: <DeliveryDiningIcon />,
+    },
+    {
         label: "Administrador",
         value: "admin",
         description: "Gestionar plataforma",
@@ -71,7 +81,7 @@ export const LoginForm = ({
             elevation={0}
             sx={{
                 width: "100%",
-                maxWidth: 520,
+                maxWidth: 560,
                 height: "100%",
                 borderRadius: 6,
                 p: { xs: 3, sm: 5 },
@@ -101,7 +111,7 @@ export const LoginForm = ({
                     display: "grid",
                     gridTemplateColumns: {
                         xs: "1fr",
-                        sm: "repeat(3, 1fr)",
+                        sm: "repeat(2, 1fr)",
                     },
                     gap: 1.5,
                     mb: 3,
@@ -189,6 +199,7 @@ export const LoginForm = ({
                         },
                     }}
                 />
+
                 <TextField
                     select
                     label="Tipo de acceso"

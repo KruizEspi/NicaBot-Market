@@ -1,4 +1,4 @@
-export type UserRole = "cliente" | "negocio" | "admin";
+export type UserRole = "cliente" | "negocio" | "admin" | "repartidor";
 
 export type LoginForm = {
     email: string;
