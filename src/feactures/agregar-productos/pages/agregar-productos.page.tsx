@@ -52,6 +52,7 @@ const initialPriceCalculator: PriceCalculatorForm = {
 };
 
 export default function AgregarProductoPage() {
+
     const navigate = useNavigate();
 
     const fileInputRef = useRef<HTMLInputElement | null>(null);

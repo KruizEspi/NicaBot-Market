@@ -1,56 +1,58 @@
-import { Box, Card, CardContent, Typography } from "@mui/material";
-import { NavLink } from "react-router-dom";
-import type { DashboardAction } from "../../types/dashboard.type";
+import { Box, Paper, Typography } from "@mui/material";
+
+import type { DashboardInsight } from "../../types/dashboard.type";
 
 type DashboardActionCardProps = {
-    action: DashboardAction;
+    insight: DashboardInsight;
 };
 
-export const DashboardActionCard = ({ action }: DashboardActionCardProps) => {
+export const DashboardActionCard = ({ insight }: DashboardActionCardProps) => {
     return (
-        <Card
-            component={NavLink}
-            to={action.path}
+        <Paper
             elevation={0}
             sx={{
-                height: "100%",
+                p: 2,
                 borderRadius: 4,
                 border: "1px solid #e2e8f0",
                 backgroundColor: "#fff",
-                textDecoration: "none",
-                color: "inherit",
-                transition: "0.2s ease",
-                "&:hover": {
-                    transform: "translateY(-4px)",
-                    boxShadow: "0 14px 35px rgba(15, 23, 42, 0.12)",
-                },
+                display: "flex",
+                gap: 1.5,
+                alignItems: "flex-start",
+                boxShadow: "0 12px 30px rgba(15, 23, 42, 0.05)",
             }}
         >
-            <CardContent>
-                <Box
+            <Box
+                sx={{
+                    width: 42,
+                    height: 42,
+                    borderRadius: 3,
+                    backgroundColor: "#ecfdf5",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 23,
+                    flexShrink: 0,
+                }}
+            >
+                {insight.icon}
+            </Box>
+
+            <Box>
+                <Typography sx={{ fontWeight: 950, color: "#0f172a" }}>
+                    {insight.title}
+                </Typography>
+
+                <Typography
+                    variant="body2"
                     sx={{
-                        width: 52,
-                        height: 52,
-                        borderRadius: 3,
-                        backgroundColor: "#e8f5e9",
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        fontSize: 28,
-                        mb: 2,
+                        color: "#64748b",
+                        mt: 0.4,
+                        lineHeight: 1.6,
                     }}
                 >
-                    {action.icon}
-                </Box>
-
-                <Typography variant="h6" sx={{ fontWeight: "bold" }}>
-                    {action.title}
+                    {insight.text}
                 </Typography>
-
-                <Typography variant="body2" color="text.secondary">
-                    {action.description}
-                </Typography>
-            </CardContent>
-        </Card>
+            </Box>
+        </Paper>
     );
 };

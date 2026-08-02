@@ -1,0 +1,1 @@
+export { default as MisPedidosPage } from "./pages/mis-pedidos.page";

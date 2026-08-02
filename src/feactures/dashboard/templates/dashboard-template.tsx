@@ -2,43 +2,21 @@ import { Box } from "@mui/material";
 
 import { AppHeader } from "../../compra-local/components/organisms/app-header";
 import { Sidebar } from "../../compra-local/components/organisms/sidebar";
-import { FloatingChatbot } from "../../chat-bot-ia/components/organisms/loating-chatbot";
-
-import type {
-    DashboardAction,
-    DashboardActivity,
-    DashboardCategoryData,
-    DashboardMonthlySale,
-    DashboardStat,
-    DashboardStoreStatus,
-} from "../types/dashboard.type";
-
 import { DashboardHero } from "../components/organisms/dashboard-hero";
 import { DashboardStatsSection } from "../components/organisms/dashboard-stats-section";
-import { DashboardActionsSection } from "../components/organisms/dashboard-actions-section";
-import { DashboardActivitySection } from "../components/organisms/dashboard-activity-section";
 import { DashboardChartsSection } from "../components/organisms/dashboard-charts-section";
-
-type DashboardTemplateProps = {
-    stats: DashboardStat[];
-    actions: DashboardAction[];
-    activities: DashboardActivity[];
-    monthlySales: DashboardMonthlySale[];
-    categoryProducts: DashboardCategoryData[];
-    storeStatus: DashboardStoreStatus[];
-    chatOpen: boolean;
-    onChatToggle: () => void;
-};
+import { DashboardActivitySection } from "../components/organisms/dashboard-activity-section";
+import { DashboardActionsSection } from "../components/organisms/dashboard-actions-section";
+import type { DashboardTemplateProps } from "../types/dashboard.type";
 
 export const DashboardTemplate = ({
                                       stats,
-                                      actions,
-                                      activities,
-                                      monthlySales,
-                                      categoryProducts,
-                                      storeStatus,
-                                      chatOpen,
-                                      onChatToggle,
+                                      paymentSummary,
+                                      deliverySummary,
+                                      recentOrders,
+                                      recentDelivery,
+                                      categories,
+                                      insights,
                                   }: DashboardTemplateProps) => {
     return (
         <Box sx={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}>
@@ -72,22 +50,34 @@ export const DashboardTemplate = ({
                     }}
                 >
                     <DashboardHero />
-
                     <DashboardStatsSection stats={stats} />
 
-                    <DashboardChartsSection
-                        monthlySales={monthlySales}
-                        categoryProducts={categoryProducts}
-                        storeStatus={storeStatus}
-                    />
+                    <Box
+                        sx={{
+                            display: "grid",
+                            gridTemplateColumns: {
+                                xs: "1fr",
+                                xl: "1.1fr 0.9fr",
+                            },
+                            gap: 3,
+                            mb: 3,
+                        }}
+                    >
+                        <DashboardChartsSection
+                            paymentSummary={paymentSummary}
+                            deliverySummary={deliverySummary}
+                            categories={categories}
+                        />
 
-                    <DashboardActionsSection actions={actions} />
+                        <DashboardActivitySection
+                            recentOrders={recentOrders}
+                            recentDelivery={recentDelivery}
+                        />
+                    </Box>
 
-                    <DashboardActivitySection activities={activities} />
+                    <DashboardActionsSection insights={insights} />
                 </Box>
             </Box>
-
-            <FloatingChatbot open={chatOpen} onToggle={onChatToggle} />
         </Box>
     );
 };

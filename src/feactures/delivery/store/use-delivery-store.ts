@@ -7,6 +7,7 @@ type DeliveryStore = {
     orders: DeliveryOrder[];
     currentRepartidorId: number;
 
+    addDeliveryOrder: (order: DeliveryOrder) => void;
     takeOrder: (orderId: number) => void;
     updateOrderStatus: (orderId: number, status: DeliveryStatus) => void;
 };
@@ -14,6 +15,11 @@ type DeliveryStore = {
 export const useDeliveryStore = create<DeliveryStore>((set) => ({
     orders: deliveryOrdersMock,
     currentRepartidorId: 4,
+
+    addDeliveryOrder: (order) =>
+        set((state) => ({
+            orders: [order, ...state.orders],
+        })),
 
     takeOrder: (orderId) =>
         set((state) => ({

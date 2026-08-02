@@ -10,6 +10,13 @@ const initialForm: AgregarTiendaForm = {
     horario: "",
     propietario: "",
     correo: "",
+
+    banco: "",
+    titularCuenta: "",
+    numeroCuenta: "",
+    tipoCuenta: "Ahorro",
+    monedaCuenta: "Córdobas",
+    telefonoCuenta: "",
 };
 
 export const useAgregarTiendaForm = () => {

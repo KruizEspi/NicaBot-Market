@@ -1,69 +1,50 @@
-import { Box, Card, CardContent, Chip, Typography } from "@mui/material";
-import type { DashboardStat } from "../../types/dashboard.type";
+import { Paper, Typography } from "@mui/material";
+
 import { DashboardStatIcon } from "../atoms/dashboard-stat-icon";
+import type { DashboardStat } from "../../types/dashboard.type";
 
 type DashboardStatCardProps = {
     stat: DashboardStat;
 };
 
 export const DashboardStatCard = ({ stat }: DashboardStatCardProps) => {
-    const isPositive = !stat.trend?.startsWith("-");
-
     return (
-        <Card
+        <Paper
             elevation={0}
             sx={{
-                height: "100%",
-                borderRadius: 4,
+                p: 2.5,
+                borderRadius: 5,
                 border: "1px solid #e2e8f0",
-                background: "linear-gradient(135deg, #ffffff, #f8fafc)",
-                transition: "0.2s ease",
+                backgroundColor: stat.bg,
+                boxShadow: "0 14px 36px rgba(15, 23, 42, 0.06)",
+                transition: "all 0.22s ease",
                 "&:hover": {
                     transform: "translateY(-4px)",
-                    boxShadow: "0 14px 35px rgba(15, 23, 42, 0.12)",
+                    boxShadow: "0 22px 48px rgba(15, 23, 42, 0.12)",
                 },
             }}
         >
-            <CardContent>
-                <Box
-                    sx={{
-                        display: "flex",
-                        alignItems: "flex-start",
-                        justifyContent: "space-between",
-                        mb: 2,
-                    }}
-                >
-                    <DashboardStatIcon icon={stat.icon} />
+            <DashboardStatIcon icon={stat.icon} />
 
-                    {stat.trend && (
-                        <Chip
-                            size="small"
-                            label={stat.trend}
-                            color={isPositive ? "success" : "error"}
-                            variant="outlined"
-                        />
-                    )}
-                </Box>
+            <Typography
+                variant="h4"
+                sx={{
+                    fontWeight: 950,
+                    color: stat.color,
+                    lineHeight: 1,
+                    mb: 0.7,
+                }}
+            >
+                {stat.value}
+            </Typography>
 
-                <Typography
-                    variant="h4"
-                    sx={{
-                        fontWeight: "bold",
-                        color: "#1e293b",
-                        mb: 0.5,
-                    }}
-                >
-                    {stat.value}
-                </Typography>
+            <Typography sx={{ color: "#0f172a", fontWeight: 900 }}>
+                {stat.title}
+            </Typography>
 
-                <Typography variant="subtitle1" sx={{ fontWeight: "bold" }}>
-                    {stat.title}
-                </Typography>
-
-                <Typography variant="body2" color="text.secondary">
-                    {stat.description}
-                </Typography>
-            </CardContent>
-        </Card>
+            <Typography variant="body2" sx={{ color: "#64748b", mt: 0.5 }}>
+                {stat.subtitle}
+            </Typography>
+        </Paper>
     );
 };

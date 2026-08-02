@@ -50,8 +50,15 @@ export const AgregarTiendaForm = ({
         !form.descripcion ||
         !form.ubicacion ||
         !form.telefono ||
+        !form.horario ||
         !form.propietario ||
-        !form.correo;
+        !form.correo ||
+        !form.banco ||
+        !form.titularCuenta ||
+        !form.numeroCuenta ||
+        !form.tipoCuenta ||
+        !form.monedaCuenta ||
+        !form.telefonoCuenta;
 
     const completedFields = useMemo(() => {
         const fields = [
@@ -270,6 +277,137 @@ export const AgregarTiendaForm = ({
                             }}
                         />
                     </Box>
+                    <Paper
+                        elevation={0}
+                        sx={{
+                            mt: 3,
+                            p: { xs: 2.5, md: 3 },
+                            borderRadius: 5,
+                            border: "1px solid #bbf7d0",
+                            background:
+                                "linear-gradient(135deg, #ffffff 0%, #f8fafc 60%, #ecfdf5 100%)",
+                        }}
+                    >
+                        <Box sx={{ mb: 2 }}>
+                            <Typography
+                                variant="h6"
+                                sx={{
+                                    fontWeight: 900,
+                                    color: "#0f172a",
+                                }}
+                            >
+                                Cuenta para recibir pagos
+                            </Typography>
+
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    color: "#64748b",
+                                    lineHeight: 1.6,
+                                    mt: 0.5,
+                                }}
+                            >
+                                Agrega la información de la cuenta donde el negocio recibirá los depósitos
+                                de las ventas realizadas dentro de NicaBot Market.
+                            </Typography>
+                        </Box>
+
+                        <Box
+                            sx={{
+                                display: "grid",
+                                gridTemplateColumns: {
+                                    xs: "1fr",
+                                    md: "repeat(2, minmax(0, 1fr))",
+                                },
+                                gap: 2.5,
+                            }}
+                        >
+                            <TextField
+                                label="Banco o entidad"
+                                value={form.banco}
+                                onChange={(event) => onChange("banco", event.target.value)}
+                                placeholder="Ejemplo: BAC, Banpro, Lafise, Billetera móvil"
+                                fullWidth
+                            />
+
+                            <TextField
+                                label="Nombre del titular"
+                                value={form.titularCuenta}
+                                onChange={(event) => onChange("titularCuenta", event.target.value)}
+                                placeholder="Nombre completo del propietario o negocio"
+                                fullWidth
+                            />
+
+                            <TextField
+                                label="Número de cuenta"
+                                value={form.numeroCuenta}
+                                onChange={(event) => {
+                                    const value = event.target.value.replace(/[^\d-]/g, "");
+                                    onChange("numeroCuenta", value);
+                                }}
+                                placeholder="000000000000"
+                                fullWidth
+                            />
+
+                            <TextField
+                                select
+                                label="Tipo de cuenta"
+                                value={form.tipoCuenta}
+                                onChange={(event) => onChange("tipoCuenta", event.target.value)}
+                                fullWidth
+                            >
+                                <MenuItem value="Ahorro">Ahorro</MenuItem>
+                                <MenuItem value="Corriente">Corriente</MenuItem>
+                                <MenuItem value="Billetera móvil">Billetera móvil</MenuItem>
+                            </TextField>
+
+                            <TextField
+                                select
+                                label="Moneda"
+                                value={form.monedaCuenta}
+                                onChange={(event) => onChange("monedaCuenta", event.target.value)}
+                                fullWidth
+                            >
+                                <MenuItem value="Córdobas">Córdobas</MenuItem>
+                                <MenuItem value="Dólares">Dólares</MenuItem>
+                            </TextField>
+
+                            <TextField
+                                label="Teléfono asociado"
+                                value={form.telefonoCuenta}
+                                onChange={(event) => {
+                                    const value = event.target.value.replace(/[^\d+\-\s]/g, "");
+                                    onChange("telefonoCuenta", value);
+                                }}
+                                placeholder="+505 8888 8888"
+                                fullWidth
+                            />
+                        </Box>
+
+                        <Paper
+                            elevation={0}
+                            sx={{
+                                mt: 2.5,
+                                p: 2,
+                                borderRadius: 4,
+                                border: "1px solid #bae6fd",
+                                backgroundColor: "#f0f9ff",
+                            }}
+                        >
+                            <Typography
+                                variant="body2"
+                                sx={{
+                                    color: "#0369a1",
+                                    fontWeight: 800,
+                                    lineHeight: 1.6,
+                                }}
+                            >
+                                Esta información se usará para simular el depósito del dinero al negocio
+                                después de que un cliente realice un pago. En una versión real, estos datos
+                                deberían validarse y protegerse desde el backend.
+                            </Typography>
+                        </Paper>
+                    </Paper>
 
                     <Box
                         sx={{

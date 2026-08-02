@@ -12,14 +12,16 @@ import { Sidebar } from "../../compra-local/components/organisms/sidebar";
 import { productosMock } from "../data/productos.mock";
 import { tiendasMock } from "../../tiendas/data/tiendas.mock";
 import { ProductImage } from "../components/atoms/product-image";
+import {useCartStore} from "../../carrito/store/use-cart-store";
 
 export default function ProductoProfilePage() {
     const { productoId } = useParams();
 
+
     const producto = productosMock.find(
         (item) => item.id === Number(productoId),
     );
-
+    const { addToCart } = useCartStore();
     if (!producto) {
         return (
             <Box sx={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}>
@@ -95,6 +97,7 @@ export default function ProductoProfilePage() {
     );
 
     const isAvailable = producto.estado === "Disponible";
+
 
     return (
         <Box sx={{ backgroundColor: "#f8fafc", minHeight: "100vh" }}>
@@ -351,55 +354,101 @@ export default function ProductoProfilePage() {
                                         de la tienda para ver su información, contacto y ubicación.
                                     </Typography>
 
+
+
                                     {tienda ? (
-                                        <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
-                                            <Button
-                                                component={NavLink}
-                                                to={`/tiendas/${tienda.id}`}
-                                                variant="contained"
-                                                sx={{
-                                                    textTransform: "none",
-                                                    textDecoration: "none",
-                                                    borderRadius: 999,
-                                                    py: 1.1,
-                                                    px: 3,
-                                                    fontWeight: 900,
-                                                    background:
-                                                        "linear-gradient(135deg, #15803d 0%, #22c55e 100%)",
-                                                    boxShadow: "0 12px 28px rgba(22, 163, 74, 0.28)",
-                                                    "&:hover": {
-                                                        background:
-                                                            "linear-gradient(135deg, #166534 0%, #16a34a 100%)",
-                                                    },
-                                                }}
-                                            >
-                                                Ver perfil de la tienda
-                                            </Button>
+                                        <Box sx={{ display: "grid", gap: 1.5 }}>
+                                            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+                                                <Button
+                                                    variant="contained"
+                                                    disabled={!isAvailable}
+                                                    onClick={() => addToCart(producto)}
+                                                    sx={{
+                                                        textTransform: "none",
+                                                        borderRadius: 999,
+                                                        py: 1.1,
+                                                        px: 3,
+                                                        fontWeight: 900,
+                                                        background: "linear-gradient(135deg, #15803d 0%, #22c55e 100%)",
+                                                        boxShadow: "0 12px 28px rgba(22, 163, 74, 0.28)",
+                                                        "&:hover": {
+                                                            background: "linear-gradient(135deg, #166534 0%, #16a34a 100%)",
+                                                        },
+                                                    }}
+                                                >
+                                                    Agregar al carrito
+                                                </Button>
 
-                                            <Button
-                                                component={NavLink}
-                                                to={`/mapa-tiendas?tiendaId=${tienda.id}`}
-                                                variant="outlined"
-                                                sx={{
-                                                    textTransform: "none",
-                                                    textDecoration: "none",
-                                                    borderRadius: 999,
-                                                    py: 1.1,
-                                                    px: 3,
-                                                    fontWeight: 900,
-                                                    borderColor: "#86efac",
-                                                    color: "#15803d",
-                                                    backgroundColor: "#f0fdf4",
-                                                    "&:hover": {
-                                                        borderColor: "#16a34a",
-                                                        backgroundColor: "#dcfce7",
-                                                    },
-                                                }}
-                                            >
-                                                Ver tienda en el mapa
-                                            </Button>
+                                                <Button
+                                                    component={NavLink}
+                                                    to="/carrito"
+                                                    variant="outlined"
+                                                    sx={{
+                                                        textTransform: "none",
+                                                        textDecoration: "none",
+                                                        borderRadius: 999,
+                                                        py: 1.1,
+                                                        px: 3,
+                                                        fontWeight: 900,
+                                                        color: "#15803d",
+                                                        borderColor: "#86efac",
+                                                        backgroundColor: "#f0fdf4",
+                                                        "&:hover": {
+                                                            borderColor: "#16a34a",
+                                                            backgroundColor: "#dcfce7",
+                                                        },
+                                                    }}
+                                                >
+                                                    Ver carrito
+                                                </Button>
+                                            </Box>
+
+                                            <Box sx={{ display: "flex", flexWrap: "wrap", gap: 1.5 }}>
+                                                <Button
+                                                    component={NavLink}
+                                                    to={`/tiendas/${tienda.id}`}
+                                                    variant="contained"
+                                                    sx={{
+                                                        textTransform: "none",
+                                                        textDecoration: "none",
+                                                        borderRadius: 999,
+                                                        py: 1.1,
+                                                        px: 3,
+                                                        fontWeight: 900,
+                                                        background: "linear-gradient(135deg, #15803d 0%, #22c55e 100%)",
+                                                        boxShadow: "0 12px 28px rgba(22, 163, 74, 0.28)",
+                                                        "&:hover": {
+                                                            background: "linear-gradient(135deg, #166534 0%, #16a34a 100%)",
+                                                        },
+                                                    }}
+                                                >
+                                                    Ver perfil de la tienda
+                                                </Button>
+
+                                                <Button
+                                                    component={NavLink}
+                                                    to={`/mapa-tiendas?tiendaId=${tienda.id}`}
+                                                    variant="outlined"
+                                                    sx={{
+                                                        textTransform: "none",
+                                                        textDecoration: "none",
+                                                        borderRadius: 999,
+                                                        py: 1.1,
+                                                        px: 3,
+                                                        fontWeight: 900,
+                                                        borderColor: "#86efac",
+                                                        color: "#15803d",
+                                                        backgroundColor: "#f0fdf4",
+                                                        "&:hover": {
+                                                            borderColor: "#16a34a",
+                                                            backgroundColor: "#dcfce7",
+                                                        },
+                                                    }}
+                                                >
+                                                    Ver tienda en el mapa
+                                                </Button>
+                                            </Box>
                                         </Box>
-
                                     ) : (
                                         <Chip
                                             label="La tienda no está registrada en el directorio"

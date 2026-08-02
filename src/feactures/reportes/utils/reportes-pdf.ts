@@ -1,49 +1,62 @@
 import jsPDF from "jspdf";
 import autoTable from "jspdf-autotable";
 
-import type { SearchReportItem } from "../types/reportes.type";
+import type {
+    AdminReportSummary,
+    ReportItem,
+} from "../types/reportes.type";
 
-type GenerateSearchReportPdfParams = {
-    reports: SearchReportItem[];
+type GenerateReportesPdfParams = {
+    reports: ReportItem[];
+    summary: AdminReportSummary;
 };
 
-export const generateSearchReportPdf = ({
-                                            reports,
-                                        }: GenerateSearchReportPdfParams) => {
+export const generateReportesPdf = ({
+                                        reports,
+                                        summary,
+                                    }: GenerateReportesPdfParams) => {
     const doc = new jsPDF();
 
-    const totalBusquedas = reports.length;
-    const totalResultados = reports.reduce(
-        (total, item) => total + item.resultados,
-        0,
-    );
-    const busquedasConResultados = reports.filter(
-        (item) => item.estado === "Con resultados",
-    ).length;
-    const busquedasSinResultados = reports.filter(
-        (item) => item.estado === "Sin resultados",
-    ).length;
-
     doc.setFontSize(18);
-    doc.text("Reporte de búsquedas - NicaBot Market", 14, 18);
+    doc.text("Reporte administrativo - NicaBot Market", 14, 18);
 
     doc.setFontSize(10);
-    doc.text(`Fecha de generación: ${new Date().toLocaleDateString()}`, 14, 26);
+    doc.text(`Fecha de generacion: ${new Date().toLocaleDateString()}`, 14, 26);
 
     doc.setFontSize(12);
-    doc.text("Resumen general", 14, 40);
+    doc.text("Resumen ejecutivo", 14, 40);
 
     autoTable(doc, {
         startY: 46,
         head: [["Indicador", "Valor"]],
         body: [
-            ["Total de búsquedas", String(totalBusquedas)],
-            ["Total de resultados encontrados", String(totalResultados)],
-            ["Búsquedas con resultados", String(busquedasConResultados)],
-            ["Búsquedas sin resultados", String(busquedasSinResultados)],
+            ["Total vendido", `C$ ${summary.totalVentas}`],
+            ["Total pedidos", String(summary.totalPedidos)],
+            ["Total tiendas", String(summary.totalTiendas)],
+            ["Total productos", String(summary.totalProductos)],
+            ["Productos disponibles", String(summary.productosDisponibles)],
+            ["Productos agotados", String(summary.productosAgotados)],
+            ["Tiendas abiertas", String(summary.tiendasAbiertas)],
+            ["Tiendas cerradas", String(summary.tiendasCerradas)],
+            ["Total envios", `C$ ${summary.totalEnvios}`],
+            ["Comision plataforma", `C$ ${summary.totalComisionPlataforma}`],
+            [
+                "Ganancia repartidores",
+                `C$ ${summary.totalGananciaRepartidores}`,
+            ],
+            ["Pedidos pagados", String(summary.pedidosPagados)],
+            ["Pedidos en delivery", String(summary.pedidosEnDelivery)],
+            ["Pedidos entregados", String(summary.pedidosEntregados)],
+            ["Delivery disponibles", String(summary.deliveryDisponibles)],
+            ["Delivery activos", String(summary.deliveryActivos)],
+            ["Delivery entregados", String(summary.deliveryEntregados)],
+            ["Total busquedas", String(summary.totalBusquedas)],
+            ["Busquedas con resultados", String(summary.busquedasConResultados)],
+            ["Busquedas sin resultados", String(summary.busquedasSinResultados)],
         ],
         styles: {
-            fontSize: 10,
+            fontSize: 9,
+            cellPadding: 2,
         },
         headStyles: {
             fillColor: [21, 128, 61],
@@ -52,29 +65,35 @@ export const generateSearchReportPdf = ({
     });
 
     autoTable(doc, {
-        startY: 90,
+        startY: 145,
         head: [
             [
+                "Pedido",
                 "Fecha",
-                "Búsqueda",
-                "Categoría",
+                "Cliente",
+                "Producto",
                 "Tienda",
-                "Ubicación",
-                "Resultados",
+                "Total",
+                "Envio",
+                "Comision",
+                "Repartidor",
                 "Estado",
             ],
         ],
         body: reports.map((item) => [
+            `#${item.id}`,
             item.fecha,
-            item.busqueda,
-            item.categoria,
-            item.tiendaEncontrada,
-            item.ubicacion,
-            String(item.resultados),
+            item.cliente,
+            item.producto,
+            item.tienda,
+            `C$ ${item.total}`,
+            `C$ ${item.envio}`,
+            `C$ ${item.comisionPlataforma}`,
+            `C$ ${item.gananciaRepartidor}`,
             item.estado,
         ]),
         styles: {
-            fontSize: 8,
+            fontSize: 7,
             cellPadding: 2,
         },
         headStyles: {
@@ -83,5 +102,5 @@ export const generateSearchReportPdf = ({
         },
     });
 
-    doc.save("reporte-busquedas-nicabot-market.pdf");
+    doc.save("reporte-administrativo-nicabot-market.pdf");
 };

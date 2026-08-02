@@ -1,5 +1,8 @@
 import { Box, Button, Chip, Paper, Typography } from "@mui/material";
 import { NavLink } from "react-router-dom";
+import { motion } from "framer-motion";
+
+const MotionBox = motion(Box);
 
 export const HomeHero = () => {
     return (
@@ -103,22 +106,67 @@ export const HomeHero = () => {
                 </Box>
             </Box>
 
-            <Box
-                component="img"
-                src="/AveSalu.png"
-                alt="NicaBot Market"
+            <MotionBox
+                initial={{
+                    opacity: 0,
+                    x: 120,
+                    y: 30,
+                    scale: 0.92,
+                }}
+                animate={{
+                    opacity: 1,
+                    x: 0,
+                    y: [0, -14, 0],
+                    scale: 1,
+                    rotate: [0, 1.5, 0],
+                }}
+                transition={{
+                    opacity: {
+                        duration: 0.8,
+                        ease: "easeOut",
+                    },
+                    x: {
+                        duration: 0.8,
+                        ease: "easeOut",
+                    },
+                    scale: {
+                        duration: 0.8,
+                        ease: "easeOut",
+                    },
+                    y: {
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    },
+                    rotate: {
+                        duration: 4,
+                        repeat: Infinity,
+                        ease: "easeInOut",
+                    },
+                }}
                 sx={{
                     position: "absolute",
                     right: { xs: -70, md: 20 },
                     bottom: { xs: -40, md: -25 },
                     width: { xs: 220, sm: 300, md: 680 },
                     height: "auto",
-                    objectFit: "contain",
                     opacity: { xs: 0.22, md: 1 },
                     pointerEvents: "none",
                     zIndex: 1,
                 }}
-            />
+            >
+                <Box
+                    component="img"
+                    src="/AveSalu.png"
+                    alt="NicaBot Market"
+                    sx={{
+                        width: "100%",
+                        height: "auto",
+                        objectFit: "contain",
+                        display: "block",
+                    }}
+                />
+            </MotionBox>
         </Paper>
     );
 };

@@ -6,9 +6,12 @@ export type AppRouteKey =
     | "tiendas"
     | "mapa"
     | "favoritos"
+    | "carrito"
+    | "misPedidos"
     | "agregarTienda"
     | "agregarProducto"
     | "delivery"
+    | "pedidosNegocio"
     | "miCuenta"
     | "dashboard"
     | "reportes";
@@ -29,6 +32,9 @@ export const rolePermissions: Record<UserRoleId, AppRouteKey[]> = {
         "agregarTienda",
         "agregarProducto",
         "delivery",
+        "carrito",
+        "misPedidos",
+        "pedidosNegocio",
         "miCuenta",
         "dashboard",
         "reportes",
@@ -40,9 +46,10 @@ export const rolePermissions: Record<UserRoleId, AppRouteKey[]> = {
         "tiendas",
         "mapa",
         "favoritos",
+        "carrito",
+        "misPedidos",
         "miCuenta",
     ],
-
     3: [
         "inicio",
         "productos",
@@ -51,6 +58,7 @@ export const rolePermissions: Record<UserRoleId, AppRouteKey[]> = {
         "miCuenta",
         "agregarTienda",
         "agregarProducto",
+        "pedidosNegocio",
     ],
 
     4: [

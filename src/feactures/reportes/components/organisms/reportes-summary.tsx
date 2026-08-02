@@ -1,27 +1,12 @@
 import { Box, Paper, Typography } from "@mui/material";
 
-import type { SearchReportItem } from "../../types/reportes.type";
+import type { ReportMetric } from "../../types/reportes.type";
 
 type ReportesSummaryProps = {
-    reports: SearchReportItem[];
+    metrics: ReportMetric[];
 };
 
-export const ReportesSummary = ({ reports }: ReportesSummaryProps) => {
-    const totalBusquedas = reports.length;
-
-    const totalResultados = reports.reduce(
-        (total, item) => total + item.resultados,
-        0,
-    );
-
-    const conResultados = reports.filter(
-        (item) => item.estado === "Con resultados",
-    ).length;
-
-    const sinResultados = reports.filter(
-        (item) => item.estado === "Sin resultados",
-    ).length;
-
+export const ReportesSummary = ({ metrics }: ReportesSummaryProps) => {
     return (
         <Box
             sx={{
@@ -34,77 +19,69 @@ export const ReportesSummary = ({ reports }: ReportesSummaryProps) => {
                 gap: 2,
             }}
         >
-            <SummaryCard
-                title="Búsquedas"
-                value={totalBusquedas}
-                icon="🔎"
-                bg="#ecfdf5"
-                color="#15803d"
-            />
-
-            <SummaryCard
-                title="Resultados"
-                value={totalResultados}
-                icon="📦"
-                bg="#eff6ff"
-                color="#0369a1"
-            />
-
-            <SummaryCard
-                title="Con resultados"
-                value={conResultados}
-                icon="✅"
-                bg="#f0fdf4"
-                color="#166534"
-            />
-
-            <SummaryCard
-                title="Sin resultados"
-                value={sinResultados}
-                icon="⚠️"
-                bg="#fffbeb"
-                color="#92400e"
-            />
+            {metrics.map((metric) => (
+                <SummaryCard key={metric.title} metric={metric} />
+            ))}
         </Box>
     );
 };
 
 type SummaryCardProps = {
-    title: string;
-    value: number;
-    icon: string;
-    bg: string;
-    color: string;
+    metric: ReportMetric;
 };
 
-const SummaryCard = ({ title, value, icon, bg, color }: SummaryCardProps) => {
+const SummaryCard = ({ metric }: SummaryCardProps) => {
     return (
         <Paper
             elevation={0}
             sx={{
                 p: 2.5,
-                borderRadius: 4,
+                borderRadius: 5,
                 border: "1px solid #e2e8f0",
-                backgroundColor: bg,
-                boxShadow: "0 12px 30px rgba(15, 23, 42, 0.06)",
+                backgroundColor: metric.bg,
+                boxShadow: "0 14px 36px rgba(15, 23, 42, 0.06)",
+                transition: "all 0.22s ease",
+                "&:hover": {
+                    transform: "translateY(-4px)",
+                    boxShadow: "0 22px 48px rgba(15, 23, 42, 0.12)",
+                },
             }}
         >
-            <Typography sx={{ fontSize: 28, mb: 1 }}>{icon}</Typography>
+            <Box
+                sx={{
+                    width: 48,
+                    height: 48,
+                    borderRadius: 4,
+                    backgroundColor: "#fff",
+                    display: "flex",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    fontSize: 26,
+                    mb: 2,
+                    boxShadow: "0 10px 24px rgba(15, 23, 42, 0.08)",
+                }}
+            >
+                {metric.icon}
+            </Box>
 
             <Typography
                 variant="h4"
                 sx={{
                     fontWeight: 950,
-                    color,
+                    color: metric.color,
                     lineHeight: 1,
-                    mb: 0.5,
+                    mb: 0.7,
                 }}
             >
-                {value}
+                {metric.value}
             </Typography>
 
             <Typography sx={{ color: "#0f172a", fontWeight: 900 }}>
-                {title}
+                {metric.title}
+            </Typography>
+
+            <Typography variant="body2" sx={{ color: "#64748b", mt: 0.5 }}>
+                {metric.subtitle}
             </Typography>
         </Paper>
     );

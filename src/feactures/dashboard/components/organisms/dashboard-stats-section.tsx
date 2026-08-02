@@ -1,6 +1,7 @@
-import { Box, Typography } from "@mui/material";
-import type { DashboardStat } from "../../types/dashboard.type";
+import { Box } from "@mui/material";
+
 import { DashboardStatCard } from "../molecules/dashboard-stat-card";
+import type { DashboardStat } from "../../types/dashboard.type";
 
 type DashboardStatsSectionProps = {
     stats: DashboardStat[];
@@ -8,27 +9,21 @@ type DashboardStatsSectionProps = {
 
 export const DashboardStatsSection = ({ stats }: DashboardStatsSectionProps) => {
     return (
-        <>
-            <Typography variant="h6" sx={{ fontWeight: "bold", mb: 2 }}>
-                Resumen general
-            </Typography>
-
-            <Box
-                sx={{
-                    display: "grid",
-                    gridTemplateColumns: {
-                        xs: "1fr",
-                        sm: "repeat(2, 1fr)",
-                        lg: "repeat(4, 1fr)",
-                    },
-                    gap: 3,
-                    mb: 4,
-                }}
-            >
-                {stats.map((stat) => (
-                    <DashboardStatCard key={stat.id} stat={stat} />
-                ))}
-            </Box>
-        </>
+        <Box
+            sx={{
+                display: "grid",
+                gridTemplateColumns: {
+                    xs: "1fr",
+                    sm: "repeat(2, minmax(0, 1fr))",
+                    lg: "repeat(4, minmax(0, 1fr))",
+                },
+                gap: 2,
+                mb: 3,
+            }}
+        >
+            {stats.map((stat) => (
+                <DashboardStatCard key={stat.title} stat={stat} />
+            ))}
+        </Box>
     );
 };

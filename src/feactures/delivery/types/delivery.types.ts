@@ -9,6 +9,7 @@ export type DeliveryStatus =
 
 export type DeliveryOrder = {
     id: number;
+    customerOrderId?: number;
     producto: string;
     tienda: string;
     tiendaUbicacion: string;

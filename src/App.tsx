@@ -15,6 +15,8 @@ import MiCuentaPage from "./feactures/mi-cuenta/pages/mi-cuenta.page";
 import {AgregarProductoPage} from "./feactures/agregar-productos";
 import {DeliveryPage} from "./feactures/delivery";
 import { ProtectedRoute } from "./shared/auth/protected-route";
+import { CarritoPage, PedidosNegocioPage } from "./feactures/carrito";
+import {MisPedidosPage} from "./feactures/mis-pedidos";
 
 export default function App() {
     return (
@@ -111,6 +113,23 @@ export default function App() {
                         </ProtectedRoute>
                     }
                 />
+                <Route
+                    path="/carrito"
+                    element={
+                        <ProtectedRoute routeKey="carrito">
+                            <CarritoPage />
+                        </ProtectedRoute>
+                    }
+                />
+
+                <Route
+                    path="/pedidos-negocio"
+                    element={
+                        <ProtectedRoute routeKey="pedidosNegocio">
+                            <PedidosNegocioPage />
+                        </ProtectedRoute>
+                    }
+                />
 
                 <Route
                     path="/reportes"
@@ -126,6 +145,14 @@ export default function App() {
                     element={
                         <ProtectedRoute routeKey="delivery">
                             <DeliveryPage />
+                        </ProtectedRoute>
+                    }
+                />
+                <Route
+                    path="/mis-pedidos"
+                    element={
+                        <ProtectedRoute routeKey="misPedidos">
+                            <MisPedidosPage />
                         </ProtectedRoute>
                     }
                 />
