@@ -12,6 +12,7 @@ type TiendasMapDynamicProps = {
     tiendas: Tienda[];
 };
 
+
 export const TiendasMapDynamic = ({ tiendas }: TiendasMapDynamicProps) => {
     return (
         <Suspense

@@ -8,6 +8,7 @@ import {
 import {
     Avatar,
     Box,
+    Button,
     CircularProgress,
     IconButton,
     Paper,
@@ -15,6 +16,7 @@ import {
     TextField,
     Typography,
 } from "@mui/material";
+import { useNavigate } from "react-router-dom";
 
 import SendRoundedIcon from "@mui/icons-material/SendRounded";
 
@@ -29,6 +31,7 @@ type ChatMessage = {
     id: string;
     role: ChatMessageRole;
     text: string;
+    store?: StoreLocation;
 };
 
 type RasaResponse = {
@@ -39,8 +42,21 @@ type RasaResponse = {
         title: string;
         payload: string;
     }>;
-    custom?: unknown;
+    custom?: RasaCustomMessage;
 };
+type StoreLocation = {
+    id: number;
+    nombre: string;
+    ubicacion: string;
+    lat: number;
+    lng: number;
+};
+
+type RasaCustomMessage = {
+    type: "store_location";
+    store: StoreLocation;
+};
+
 
 type ConnectionStatus = "checking" | "online" | "offline";
 
@@ -86,6 +102,7 @@ export const FloatingChatbot = ({
                                     open,
                                     onToggle,
                                 }: FloatingChatbotProps) => {
+    const navigate = useNavigate();
     const [messages, setMessages] = useState<ChatMessage[]>([
         {
             id: createId(),
@@ -154,6 +171,7 @@ export const FloatingChatbot = ({
     const addMessage = (
         role: ChatMessageRole,
         text: string,
+        store?: StoreLocation,
     ) => {
         setMessages((currentMessages) => [
             ...currentMessages,
@@ -161,6 +179,7 @@ export const FloatingChatbot = ({
                 id: createId(),
                 role,
                 text,
+                store,
             },
         ]);
     };
@@ -224,31 +243,45 @@ export const FloatingChatbot = ({
 
             setConnectionStatus("online");
 
-            const textResponses = rasaResponses.filter(
-                (
-                    response,
-                ): response is RasaResponse & {
-                    text: string;
-                } =>
-                    typeof response.text === "string" &&
-                    response.text.trim().length > 0,
-            );
+            let hasResponse = false;
 
-            if (textResponses.length === 0) {
+            rasaResponses.forEach((response) => {
+                if (
+                    typeof response.text === "string" &&
+                    response.text.trim().length > 0
+                ) {
+                    addMessage(
+                        "bot",
+                        response.text.trim(),
+                    );
+
+                    hasResponse = true;
+                }
+
+                if (
+                    response.custom?.type ===
+                    "store_location" &&
+                    response.custom.store
+                ) {
+                    const store =
+                        response.custom.store;
+
+                    addMessage(
+                        "bot",
+                        `📍 ${store.nombre}\n${store.ubicacion}`,
+                        store,
+                    );
+
+                    hasResponse = true;
+                }
+            });
+
+            if (!hasResponse) {
                 addMessage(
                     "bot",
                     "Recibí tu mensaje, pero todavía no tengo una respuesta configurada para esa consulta.",
                 );
-
-                return;
             }
-
-            textResponses.forEach((response) => {
-                addMessage(
-                    "bot",
-                    response.text.trim(),
-                );
-            });
         } catch (error) {
             setConnectionStatus("offline");
 
@@ -264,10 +297,9 @@ export const FloatingChatbot = ({
         } finally {
             setIsSending(false);
         }
-    };
-
+    }
     const handleInputKeyDown = (
-        event: React.KeyboardEvent,
+        event: KeyboardEvent<HTMLInputElement>,
     ) => {
         if (
             event.key === "Enter" &&
@@ -535,6 +567,50 @@ export const FloatingChatbot = ({
                                                     message.text
                                                 }
                                             </Typography>
+                                            {message.store && (
+                                                <Button
+                                                    type="button"
+                                                    size="small"
+                                                    variant="contained"
+                                                    onClick={() => {
+                                                        const store = message.store;
+
+                                                        if (!store) {
+                                                            return;
+                                                        }
+
+                                                        console.log(
+                                                            "Tienda enviada al mapa:",
+                                                            store,
+                                                        );
+
+                                                        const params = new URLSearchParams({
+                                                            vista: "mapa",
+                                                            tiendaId: String(store.id),
+                                                            lat: String(store.lat),
+                                                            lng: String(store.lng),
+                                                            nombre: store.nombre,
+                                                            ubicacion: store.ubicacion,
+                                                        });
+
+                                                        navigate(
+                                                            `/mapa-tiendas?${params.toString()}`,
+                                                        );
+                                                    }}
+                                                    sx={{
+                                                        mt: 1.2,
+                                                        borderRadius: 999,
+                                                        textTransform: "none",
+                                                        fontWeight: 800,
+                                                        backgroundColor: "#15803d",
+                                                        "&:hover": {
+                                                            backgroundColor: "#166534",
+                                                        },
+                                                    }}
+                                                >
+                                                    📍 Ver en el mapa
+                                                </Button>
+                                            )}
                                         </Paper>
                                     </Box>
                                 );

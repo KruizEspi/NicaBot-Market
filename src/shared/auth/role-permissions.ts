@@ -18,6 +18,7 @@ export type AppRouteKey =
 
 export const guestPermissions: AppRouteKey[] = [
     "inicio",
+    "mapa",
     "productos",
     "tiendas",
 ];
@@ -54,6 +55,7 @@ export const rolePermissions: Record<UserRoleId, AppRouteKey[]> = {
         "inicio",
         "productos",
         "tiendas",
+        "mapa",
         "favoritos",
         "miCuenta",
         "agregarTienda",
@@ -64,6 +66,7 @@ export const rolePermissions: Record<UserRoleId, AppRouteKey[]> = {
     4: [
         "inicio",
         "delivery",
+        "mapa",
         "miCuenta",
     ],
 };
